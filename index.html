@@ -36,6 +36,7 @@
     .section-label { font-size: .8rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
     .section-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; color: var(--navy); line-height: 1.25; margin-bottom: 20px; }
     .section-desc { font-size: 1.05rem; color: var(--gray); max-width: 640px; line-height: 1.8; }
+    .section-desc--nowrap { white-space: nowrap; }
     .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; border-radius: var(--radius); font-weight: 700; font-size: .95rem; transition: var(--transition); }
     .btn-primary { background: var(--blue); color: var(--white); }
     .btn-primary:hover { background: var(--navy); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(46,117,182,.35); }
@@ -355,6 +356,7 @@
     }
     @media (max-width: 768px) {
       .section { padding: 64px 0; }
+      .section-desc--nowrap { white-space: normal; }
       .nav-links, .nav-cta { display: none; }
       .hamburger { display: flex; }
       #company .company-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -432,7 +434,7 @@
   <div class="hero-bg"></div>
   <div class="hero-shape"></div>
   <div class="container hero-content">
-    <div class="hero-badge"><span></span>기술사사무소개설등록 제 2025-2213호</div>
+    <div class="hero-badge"><span></span>기술사사무소 등록번호 제 2025-2213호</div>
     <h1 class="hero-title">
       엘에스구조엔지니어링<br>
       <em>LS Structure Engineering</em>
@@ -489,7 +491,7 @@
             </div>
             <div class="detail-item">
               <span class="dl">등록번호</span>
-              <span class="dd">기술사사무소개설등록 제 2025-2213호</span>
+              <span class="dd">기술사사무소 등록번호 제 2025-2213호</span>
             </div>
             <div class="detail-item">
               <span class="dl">소재지</span>
@@ -536,7 +538,7 @@
     <div class="fade-up">
       <p class="section-label">SERVICES</p>
       <h2 class="section-title">전문적인 구조 안전 서비스</h2>
-      <p class="section-desc" style="white-space:nowrap;">구조설계·감리부터 안전점검, 구조검토까지 구조 안전의 전 과정을 책임집니다.</p>
+      <p class="section-desc section-desc--nowrap">구조설계·감리부터 안전점검, 구조검토까지 구조 안전의 전 과정을 책임집니다.</p>
     </div>
     <div class="services-grid">
       <div class="service-card fade-up">
@@ -599,7 +601,7 @@
     <div class="fade-up">
       <p class="section-label">TECHNOLOGY</p>
       <h2 class="section-title">차별화된 기술력으로<br>새로운 가치를 창출합니다</h2>
-      <p class="section-desc" style="white-space:nowrap;">엘에스구조엔지니어링㈜만의 특화된 기술과 공법으로 더 안전하고 효율적인 건축 환경을 실현합니다.</p>
+      <p class="section-desc section-desc--nowrap">엘에스구조엔지니어링㈜만의 특화된 기술과 공법으로 더 안전하고 효율적인 건축 환경을 실현합니다.</p>
     </div>
     <div class="tech-grid">
       <!-- Z-Pile -->
@@ -747,7 +749,7 @@
     <div class="fade-up" id="perf-header">
       <p class="section-label">PROJECTS</p>
       <h2 class="section-title">다양한 프로젝트 경험</h2>
-      <p class="section-desc" style="white-space:nowrap;">주거시설부터 복합건축, 구조검토, 감리까지 폭넓은 분야에서 전문적인 구조 서비스를 제공합니다.</p>
+      <p class="section-desc section-desc--nowrap">주거시설부터 복합건축, 구조검토, 감리까지 폭넓은 분야에서 전문적인 구조 서비스를 제공합니다.</p>
     </div>
 
     <!-- 필터 탭 -->
@@ -840,7 +842,7 @@
             <div class="contact-icon">🏛️</div>
             <div class="contact-text">
               <h5>등록</h5>
-              <p>기술사사무소개설등록<br>제 2025-2213호</p>
+              <p>기술사사무소 등록번호<br>제 2025-2213호</p>
             </div>
           </div>
           <div class="contact-item">
@@ -968,7 +970,7 @@
     </div>
     <div class="footer-bottom">
       <p>&copy; 엘에스구조엔지니어링㈜. All rights reserved.</p>
-      <p>기술사사무소개설등록 제 2025-2213호</p>
+      <p>기술사사무소 등록번호 제 2025-2213호</p>
     </div>
   </div>
 </footer>
