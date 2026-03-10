@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>엘에스구조엔지니어링㈜ | LS Structure Engineering</title>
+  <meta name="description" content="엘에스구조엔지니어링㈜ - 구조설계, 감리, 안전점검, 구조검토 전문 기술사사무소" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:   #1F4E79;
+      --blue:   #2E75B6;
+      --blue-light: #4A90D9;
+      --gray-dark:  #2C2C2C;
+      --gray:       #555;
+      --gray-light: #F4F6F9;
+      --white:  #FFFFFF;
+      --border: #D9E4F0;
+      --shadow: 0 4px 24px rgba(31,78,121,.12);
+      --radius: 8px;
+      --transition: .3s ease;
+      --font: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font); color: var(--gray-dark); background: var(--white); line-height: 1.7; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { display: block; max-width: 100%; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    /* ===== UTILITIES ===== */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 96px 0; }
+    .section--gray { background: var(--gray-light); }
+    .section-label { font-size: .8rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
+    .section-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; color: var(--navy); line-height: 1.25; margin-bottom: 20px; }
+    .section-desc { font-size: 1.05rem; color: var(--gray); max-width: 640px; line-height: 1.8; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; border-radius: var(--radius); font-weight: 700; font-size: .95rem; transition: var(--transition); }
+    .btn-primary { background: var(--blue); color: var(--white); }
+    .btn-primary:hover { background: var(--navy); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(46,117,182,.35); }
+    .btn-outline { border: 2px solid var(--white); color: var(--white); }
+    .btn-outline:hover { background: rgba(255,255,255,.15); }
+    .divider { width: 48px; height: 4px; background: var(--blue); border-radius: 2px; margin-bottom: 32px; }
+
+    /* ===== NAVIGATION ===== */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(255,255,255,.97);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 16px rgba(0,0,0,.08);
+      transition: var(--transition);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .nav-logo { display: flex; flex-direction: row; align-items: center; gap: 10px; }
+    .nav-logo-img { height: 40px; width: auto; display: block; flex-shrink: 0; }
+    .nav-logo-text { display: flex; flex-direction: column; gap: 2px; }
+    .nav-logo .logo-kr { font-size: .95rem; font-weight: 800; color: var(--navy); letter-spacing: -.02em; }
+    .nav-logo .logo-en { font-size: .65rem; font-weight: 600; color: var(--blue); letter-spacing: .06em; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 4px; }
+    .nav-links a {
+      padding: 8px 16px; border-radius: 6px; font-size: .9rem; font-weight: 600; color: var(--gray-dark);
+      transition: var(--transition); position: relative;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--blue); background: rgba(46,117,182,.08); }
+    .nav-cta { background: var(--navy); color: var(--white); padding: 10px 22px; border-radius: var(--radius); font-size: .85rem; font-weight: 700; transition: var(--transition); }
+    .nav-cta:hover { background: var(--blue); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; border-radius: 6px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; transition: var(--transition); }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile Menu */
+    #mobile-menu {
+      display: none; position: fixed; top: 72px; left: 0; right: 0; bottom: 0;
+      background: var(--white); z-index: 999; overflow-y: auto;
+      flex-direction: column; padding: 24px;
+    }
+    #mobile-menu.open { display: flex; }
+    #mobile-menu a { padding: 16px 8px; font-size: 1.05rem; font-weight: 600; color: var(--navy); border-bottom: 1px solid var(--border); }
+    #mobile-menu a:last-child { border-bottom: none; }
+
+    /* ===== HERO ===== */
+    #home {
+      min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+      background: linear-gradient(135deg, #0D2B47 0%, #1F4E79 50%, #2E75B6 100%);
+      position: relative; overflow: hidden; padding-top: 72px;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-shape {
+      position: absolute; right: -120px; top: 50%; transform: translateY(-50%);
+      width: 700px; height: 700px; border-radius: 50%;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+      pointer-events: none;
+    }
+    .hero-shape::before {
+      content: ''; position: absolute; inset: 60px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.06);
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+      border-radius: 24px; padding: 6px 16px;
+      font-size: .78rem; font-weight: 600; color: rgba(255,255,255,.9);
+      letter-spacing: .08em; text-transform: uppercase; margin-bottom: 28px;
+    }
+    .hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: #4EC9FF; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.5)} }
+    .hero-title {
+      font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 900; color: var(--white); line-height: 1.15;
+      letter-spacing: -.02em; margin-bottom: 20px;
+    }
+    .hero-title em { display: block; font-style: normal; color: #7EC8F0; }
+    .hero-slogan {
+      font-size: clamp(.85rem, 1.8vw, 1.05rem); font-weight: 600; color: rgba(255,255,255,.65);
+      letter-spacing: .18em; text-transform: uppercase; margin-bottom: 48px;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .hero-stats { display: flex; gap: 48px; margin-top: 72px; flex-wrap: wrap; }
+    .hero-stat { text-align: left; }
+    .hero-stat .num { font-size: 2rem; font-weight: 900; color: var(--white); line-height: 1; }
+    .hero-stat .num sup { font-size: .95rem; font-weight: 700; vertical-align: super; }
+    .hero-stat .lbl { font-size: .8rem; color: rgba(255,255,255,.6); margin-top: 4px; letter-spacing: .04em; }
+    .hero-scroll {
+      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(255,255,255,.5); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase;
+    }
+    .scroll-line { width: 1px; height: 48px; background: rgba(255,255,255,.3); animation: scrollLine 2s ease-in-out infinite; }
+    @keyframes scrollLine { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1)} 100%{transform:scaleY(0);transform-origin:bottom} }
+
+    /* ===== COMPANY ===== */
+    #company .company-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+    .company-info .section-desc { margin-bottom: 32px; }
+    .company-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+    .tag { padding: 7px 16px; border-radius: 24px; border: 1.5px solid var(--border); font-size: .82rem; font-weight: 600; color: var(--blue); background: rgba(46,117,182,.05); }
+    .company-detail { background: var(--gray-light); border-radius: 12px; padding: 32px; }
+    .company-detail h4 { font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 12px; }
+    .detail-list { display: flex; flex-direction: column; gap: 14px; }
+    .detail-item { display: flex; gap: 16px; align-items: flex-start; font-size: .9rem; }
+    .detail-item .dl { min-width: 90px; font-weight: 700; color: var(--navy); }
+    .detail-item .dd { color: var(--gray); line-height: 1.6; }
+    .company-visual { position: relative; }
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .stat-card {
+      background: var(--white); border-radius: 12px; padding: 28px 24px;
+      border: 1.5px solid var(--border); text-align: center; transition: var(--transition);
+      box-shadow: var(--shadow);
+    }
+    .stat-card:hover { border-color: var(--blue); transform: translateY(-4px); }
+    .stat-card.featured { background: var(--navy); border-color: var(--navy); }
+    .stat-card.featured .stat-num, .stat-card.featured .stat-lbl { color: var(--white); }
+    .stat-num { font-size: 2.4rem; font-weight: 900; color: var(--navy); line-height: 1; }
+    .stat-num span { font-size: 1.2rem; }
+    .stat-lbl { font-size: .82rem; color: var(--gray); margin-top: 8px; font-weight: 600; }
+
+    /* ===== SERVICES ===== */
+    #services .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 56px; }
+    .service-card {
+      background: var(--white); border-radius: 14px; overflow: hidden;
+      border: 1.5px solid var(--border); transition: var(--transition); box-shadow: var(--shadow);
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(31,78,121,.16); border-color: var(--blue); }
+    .service-card-top { background: linear-gradient(135deg, var(--navy), var(--blue)); padding: 32px 28px 24px; }
+    .service-icon { width: 56px; height: 56px; border-radius: 14px; background: rgba(255,255,255,.15); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-size: 1.6rem; }
+    .service-card-top h3 { font-size: 1.15rem; font-weight: 800; color: var(--white); line-height: 1.3; }
+    .service-card-body { padding: 24px 28px 28px; }
+    .service-card-body p { font-size: .9rem; color: var(--gray); margin-bottom: 20px; line-height: 1.75; }
+    .service-list { display: flex; flex-direction: column; gap: 8px; }
+    .service-list li { display: flex; align-items: center; gap: 10px; font-size: .85rem; color: var(--gray-dark); font-weight: 500; }
+    .service-list li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
+
+
+    /* ===== TECHNOLOGY ===== */
+    #technology .tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 56px; }
+    .tech-card {
+      border-radius: 16px; overflow: hidden; border: 1.5px solid var(--border);
+      transition: var(--transition); box-shadow: var(--shadow); background: var(--white);
+    }
+    .tech-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(31,78,121,.16); }
+    .tech-card-header { padding: 36px 36px 28px; border-bottom: 1.5px solid var(--border); }
+    .tech-badge { display: inline-block; padding: 4px 12px; border-radius: 24px; background: rgba(46,117,182,.1); color: var(--blue); font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 16px; }
+    .tech-card-header h3 { font-size: 1.4rem; font-weight: 800; color: var(--navy); margin-bottom: 10px; }
+    .tech-card-header p { font-size: .9rem; color: var(--gray); line-height: 1.75; }
+    .tech-card-body { padding: 28px 36px; }
+    .tech-features { display: flex; flex-direction: column; gap: 16px; }
+    .tech-feat { display: flex; gap: 14px; align-items: flex-start; }
+    .tech-feat-icon { width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, var(--navy), var(--blue)); display: flex; align-items: center; justify-content: center; color: white; font-size: .9rem; flex-shrink: 0; }
+    .tech-feat-text h5 { font-size: .9rem; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+    .tech-feat-text p { font-size: .82rem; color: var(--gray); line-height: 1.6; }
+    .tech-features--4col { display: grid; grid-template-columns: repeat(4, 1fr); }
+    @media (max-width: 1024px) { .tech-features--4col { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .tech-features--4col { grid-template-columns: 1fr; } }
+
+    /* ===== PERFORMANCE ===== */
+    #performance { background: var(--gray-light); }
+    .perf-tabs { display: flex; gap: 8px; margin: 40px 0 32px; flex-wrap: wrap; }
+    .tab-btn {
+      padding: 10px 24px; border-radius: 24px; font-size: .9rem; font-weight: 700;
+      color: var(--gray); background: var(--white); border: 1.5px solid var(--border);
+      transition: var(--transition);
+    }
+    .tab-btn:hover { border-color: var(--blue); color: var(--blue); }
+    .tab-btn.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+    /* Project image grid */
+    .proj-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .proj-card { position: relative; border-radius: var(--radius); overflow: hidden; cursor: pointer; background: var(--navy); aspect-ratio: 4/3; }
+    .proj-card__img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+    .proj-card:hover .proj-card__img { transform: scale(1.06); }
+    .proj-card__placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 20px; text-align: center; background: var(--navy); }
+    .proj-card__placeholder span { color: rgba(255,255,255,.85); font-size: .875rem; font-weight: 700; line-height: 1.5; }
+    .proj-card__overlay { position: absolute; inset: 0; background: rgba(0,0,0,0); display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 20px; gap: 10px; transition: background .3s ease; }
+    .proj-card:hover .proj-card__overlay { background: rgba(0,0,0,.62); }
+    .proj-card__name { color: var(--white); font-size: .875rem; font-weight: 700; text-align: center; opacity: 0; transform: translateY(8px); transition: all .3s ease; line-height: 1.4; }
+    .proj-card__more { background: var(--white); color: var(--navy); font-size: .75rem; font-weight: 700; padding: 6px 16px; border-radius: 100px; opacity: 0; transform: translateY(8px); transition: all .3s ease .05s; }
+    .proj-card:hover .proj-card__name, .proj-card:hover .proj-card__more { opacity: 1; transform: translateY(0); }
+
+    /* Review list */
+    .review-year-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .review-year-header h4 { font-size: 1.05rem; font-weight: 800; color: var(--navy); white-space: nowrap; }
+    .review-year-header::after { content: ''; flex: 1; height: 2px; background: var(--border); }
+    .review-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; list-style: none; }
+    .review-item { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 14px 18px; font-size: .875rem; color: var(--gray-dark); line-height: 1.5; display: flex; align-items: flex-start; gap: 10px; transition: var(--transition); }
+    .review-item::before { content: '–'; color: var(--blue); font-weight: 700; flex-shrink: 0; }
+    .review-item:hover { border-color: var(--blue); background: #f0f6ff; }
+    /* Detail view */
+    #perf-header.hidden { display: none; }
+    #performance.detail-active { padding-top: 20px; margin-top: 0; }
+    #performance.detail-active .perf-tabs { margin-top: 0; }
+    .proj-list-view.hidden { display: none; }
+    .proj-detail { display: none; }
+    .proj-detail.active { display: block; }
+    .proj-back { display: none; align-items: center; gap: 8px; font-size: .875rem; font-weight: 600; color: var(--navy); border: 1.5px solid var(--navy); border-radius: 100px; padding: 8px 18px; margin-bottom: 20px; transition: var(--transition); }
+    .proj-back.visible { display: inline-flex; }
+    .proj-back:hover { background: var(--navy); color: var(--white); }
+    .proj-back svg { width: 16px; height: 16px; }
+    .proj-detail-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    /* Slider */
+    .slider-wrap { position: relative; border-radius: var(--radius); overflow: hidden; background: var(--navy); aspect-ratio: 4/3; }
+    .slider-track { display: flex; height: 100%; transition: transform .4s ease; }
+    .slide { min-width: 100%; height: 100%; flex-shrink: 0; }
+    .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .slide-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--navy); }
+    .slide-placeholder span { color: rgba(255,255,255,.6); font-size: 1rem; text-align: center; padding: 20px; }
+    .slider-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.85); display: flex; align-items: center; justify-content: center; z-index: 3; transition: var(--transition); }
+    .slider-arrow:hover { background: var(--white); }
+    .slider-arrow.prev { left: 12px; }
+    .slider-arrow.next { right: 12px; }
+    .slider-arrow svg { width: 18px; height: 18px; color: var(--navy); }
+    .slider-arrow.hidden { display: none; }
+    .slider-indicator { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,.45); color: #fff; font-size: .75rem; font-weight: 700; padding: 4px 12px; border-radius: 100px; z-index: 3; letter-spacing: .05em; pointer-events: none; }
+    .slider-indicator.hidden { display: none; }
+    /* Project info */
+    .proj-info-header { margin-bottom: 20px; }
+    .proj-info-header h3 { font-size: 1.35rem; font-weight: 800; color: var(--navy); line-height: 1.35; }
+    .proj-info-table { width: 100%; border-collapse: collapse; font-size: .875rem; }
+    .proj-info-table th { width: 110px; padding: 12px 16px; background: rgba(31,78,121,.07); color: var(--navy); font-weight: 700; text-align: left; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); white-space: nowrap; }
+    .proj-info-table td { padding: 12px 16px; color: var(--gray-dark); border-bottom: 1px solid var(--border); }
+    .proj-info-table tr:last-child th, .proj-info-table tr:last-child td { border-bottom: none; }
+
+    /* ===== CONTACT ===== */
+    #contact .contact-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 56px; align-items: start; }
+    .contact-info h3 { font-size: 1.5rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+    .contact-info .sub { font-size: .9rem; color: var(--gray); margin-bottom: 36px; }
+    .contact-items { display: flex; flex-direction: column; gap: 24px; }
+    .contact-item { display: flex; gap: 16px; align-items: flex-start; }
+    .contact-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--navy), var(--blue));
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 1.1rem; flex-shrink: 0;
+    }
+    .contact-text h5 { font-size: .85rem; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
+    .contact-text p { font-size: .95rem; color: var(--gray-dark); line-height: 1.6; font-weight: 500; }
+    .contact-text a { color: var(--navy); font-weight: 700; }
+    .contact-text a:hover { color: var(--blue); }
+
+    /* ===== CONTACT MAP ===== */
+    .contact-map-wrap { border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1.5px solid var(--border); }
+
+    /* ===== CONTACT MODAL ===== */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity .25s ease; }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .modal-box { background: var(--white); border-radius: 16px; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; box-shadow: 0 24px 80px rgba(0,0,0,.25); transform: translateY(16px); transition: transform .25s ease; }
+    .modal-overlay.active .modal-box { transform: translateY(0); }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 24px 28px 20px; border-bottom: 1.5px solid var(--border); position: sticky; top: 0; background: var(--white); border-radius: 16px 16px 0 0; z-index: 1; }
+    .modal-header h3 { font-size: 1.1rem; font-weight: 800; color: var(--navy); }
+    .modal-close { width: 36px; height: 36px; border-radius: 50%; background: var(--gray-light); display: flex; align-items: center; justify-content: center; transition: var(--transition); flex-shrink: 0; }
+    .modal-close:hover { background: var(--border); }
+    .modal-close svg { width: 18px; height: 18px; color: var(--gray-dark); }
+    .modal-body { padding: 24px 28px 28px; }
+
+    /* ===== CONTACT FORM ===== */
+    .contact-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: .825rem; font-weight: 700; color: var(--navy); }
+    .form-req { color: var(--blue); }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 11px 14px; border: 1.5px solid var(--border); border-radius: var(--radius);
+      font-size: .9rem; font-family: var(--font); color: var(--gray-dark);
+      background: var(--white); transition: border-color .2s ease; outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--blue); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23555' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+    .form-check { display: flex; align-items: flex-start; gap: 10px; }
+    .form-check input[type="checkbox"] { width: 16px; height: 16px; margin-top: 2px; flex-shrink: 0; accent-color: var(--navy); cursor: pointer; }
+    .form-check label { font-size: .82rem; color: var(--gray); cursor: pointer; line-height: 1.5; }
+    .form-submit { width: 100%; padding: 14px; font-size: 1rem; justify-content: center; margin-top: 4px; }
+    .form-success { display: none; text-align: center; padding: 48px 24px; background: var(--white); border: 1.5px solid var(--border); border-radius: 14px; }
+    .form-success-icon { font-size: 2.8rem; margin-bottom: 16px; }
+    .form-success h4 { font-size: 1.2rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+    .form-success p { font-size: .9rem; color: var(--gray); }
+    @media (max-width: 540px) { .form-row { grid-template-columns: 1fr; } }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #0D2B47; color: rgba(255,255,255,.65);
+      padding: 48px 0 32px;
+    }
+    .footer-inner { display: flex; gap: 48px; flex-wrap: wrap; justify-content: space-between; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,.1); }
+    .footer-brand .logo-kr { font-size: 1.05rem; font-weight: 800; color: var(--white); }
+    .footer-brand .logo-en { font-size: .7rem; font-weight: 600; color: rgba(255,255,255,.5); letter-spacing: .08em; margin-top: 2px; margin-bottom: 16px; }
+    .footer-brand p { font-size: .82rem; line-height: 1.8; max-width: 320px; }
+    .footer-links h6 { color: var(--white); font-size: .85rem; font-weight: 700; margin-bottom: 16px; }
+    .footer-links ul { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links li { font-size: .82rem; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom { margin-top: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: .78rem; }
+    .footer-bottom p { opacity: .6; }
+
+    /* ===== SCROLL ANIMATIONS ===== */
+    .fade-up { opacity: 0; transform: translateY(32px); transition: opacity .7s ease, transform .7s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up:nth-child(2) { transition-delay: .1s; }
+    .fade-up:nth-child(3) { transition-delay: .2s; }
+    .fade-up:nth-child(4) { transition-delay: .3s; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      #company .company-grid { gap: 48px; }
+      #services .services-grid { grid-template-columns: 1fr 1fr; }
+      #technology .tech-grid { grid-template-columns: 1fr; }
+      .proj-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .section { padding: 64px 0; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      #company .company-grid { grid-template-columns: 1fr; gap: 40px; }
+      #services .services-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      #contact .contact-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 28px; }
+      .footer-inner { flex-direction: column; gap: 32px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .tech-card-header, .tech-card-body { padding: 24px; }
+      .proj-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .proj-detail-inner { grid-template-columns: 1fr; gap: 28px; }
+      .review-list { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      #services .services-grid { grid-template-columns: 1fr; }
+      .perf-tabs { gap: 6px; }
+      .tab-btn { padding: 8px 16px; font-size: .82rem; }
+      .proj-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .proj-info-table th { width: 90px; padding: 10px 12px; font-size: .8rem; }
+      .proj-info-table td { padding: 10px 12px; font-size: .8rem; }
+    }
+
+    /* ===== BACK TO TOP ===== */
+    #back-top {
+      position: fixed; bottom: 32px; right: 32px; width: 48px; height: 48px;
+      border-radius: 12px; background: var(--navy); color: white; display: flex;
+      align-items: center; justify-content: center; font-size: 1.1rem;
+      box-shadow: 0 4px 16px rgba(31,78,121,.35); transition: var(--transition);
+      opacity: 0; pointer-events: none; z-index: 500;
+    }
+    #back-top.visible { opacity: 1; pointer-events: auto; }
+    #back-top:hover { background: var(--blue); transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="#home" class="nav-logo">
+      <img src="images/CI_1.jpg" alt="엘에스구조엔지니어링 로고" class="nav-logo-img" onerror="this.style.display='none'">
+      <div class="nav-logo-text">
+        <span class="logo-kr">엘에스구조엔지니어링㈜</span>
+        <span class="logo-en">LS Structure Engineering</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#home">홈</a>
+      <a href="#company">회사소개</a>
+      <a href="#services">서비스</a>
+      <a href="#technology">기술/공법</a>
+      <a href="#performance">수행실적</a>
+      <a href="#contact">연락처</a>
+    </div>
+    <button class="nav-cta" id="open-modal-btn">문의하기</button>
+    <button class="hamburger" id="hamburger" aria-label="메뉴">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu">
+  <a href="#home">홈</a>
+  <a href="#company">회사소개</a>
+  <a href="#services">서비스</a>
+  <a href="#technology">기술/공법</a>
+  <a href="#performance">수행실적</a>
+  <a href="#contact">연락처 / 문의</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-shape"></div>
+  <div class="container hero-content">
+    <div class="hero-badge"><span></span>기술사사무소개설등록 제 2025-2213호</div>
+    <h1 class="hero-title">
+      엘에스구조엔지니어링<br>
+      <em>LS Structure Engineering</em>
+    </h1>
+    <p class="hero-slogan">BEYOND LIMITS, FOR LIFE AND SAFETY</p>
+    <div class="hero-actions">
+      <a href="#services" class="btn btn-primary">서비스 알아보기</a>
+      <a href="#contact" class="btn btn-outline">문의하기</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>scroll</span>
+  </div>
+</section>
+
+<!-- ===== COMPANY ===== -->
+<section id="company" class="section">
+  <div class="container">
+    <div class="company-grid">
+      <div class="company-info fade-up">
+        <p class="section-label">회사소개</p>
+        <h2 class="section-title">구조 안전의 새로운 기준을<br>제시합니다</h2>
+        <div class="divider"></div>
+        <p class="section-desc" style="margin-bottom:12px;">엘에스구조엔지니어링㈜은 구조공학 분야의 전문 기술사가 이끄는 기술사사무소입니다.</p>
+        <p class="section-desc">구조설계부터 감리, 안전점검, 구조검토까지 건축물의 생애주기 전반에 걸친 구조안전 서비스를 제공합니다.</p>
+        <div class="company-tags">
+          <span class="tag">구조설계</span>
+          <span class="tag">구조감리</span>
+          <span class="tag">안전점검</span>
+          <span class="tag">구조검토</span>
+          <span class="tag">Z-Pile 공법</span>
+          <span class="tag">철근샵드로잉</span>
+          <span class="tag">MFRC 공법</span>
+        </div>
+        <div class="company-detail">
+          <h4>회사 개요</h4>
+          <div class="detail-list">
+            <div class="detail-item">
+              <span class="dl">회사명</span>
+              <span class="dd">엘에스구조엔지니어링㈜</span>
+            </div>
+            <div class="detail-item">
+              <span class="dl">영문명</span>
+              <span class="dd">LS Structure Engineering</span>
+            </div>
+            <div class="detail-item">
+              <span class="dl">대표이사</span>
+              <span class="dd">이용직 · 양준오</span>
+            </div>
+            <div class="detail-item">
+              <span class="dl">설립일</span>
+              <span class="dd">2025년 6월</span>
+            </div>
+            <div class="detail-item">
+              <span class="dl">등록번호</span>
+              <span class="dd">기술사사무소개설등록 제 2025-2213호</span>
+            </div>
+            <div class="detail-item">
+              <span class="dl">소재지</span>
+              <span class="dd">서울특별시 강서구 양천로 532<br>가양역 더리브 아너비즈타워 1006호</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="company-visual fade-up">
+        <div class="stats-grid">
+          <div class="stat-card featured">
+            <div class="stat-num" style="font-size:1.25rem;line-height:1.3;word-break:keep-all;">연구개발<br>전담부서</div>
+            <div class="stat-lbl">과학기술정보통신부 인증</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">15<span>년+</span></div>
+            <div class="stat-lbl">평균 구조설계 경력</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" style="font-size:1.6rem;">300,000<span>㎡+</span></div>
+            <div class="stat-lbl">구조설계 수행면적</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">서울<span> 강서</span></div>
+            <div class="stat-lbl">본사 소재지</div>
+          </div>
+        </div>
+        <div style="margin-top:24px; padding:28px; background:linear-gradient(135deg,var(--navy),var(--blue)); border-radius:14px; color:white;">
+          <div style="font-size:.78rem;font-weight:700;letter-spacing:.12em;opacity:.7;text-transform:uppercase;margin-bottom:12px;">Our Mission</div>
+          <div style="font-size:1.1rem;font-weight:800;line-height:1.5;">
+            "한계를 넘어,<br>생명과 안전을 위하여"
+          </div>
+          <div style="font-size:.82rem;opacity:.75;margin-top:8px;font-style:italic;">BEYOND LIMITS, FOR LIFE AND SAFETY</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES ===== -->
+<section id="services" class="section section--gray">
+  <div class="container">
+    <div class="fade-up">
+      <p class="section-label">서비스</p>
+      <h2 class="section-title">전문적인 구조 안전 서비스</h2>
+      <p class="section-desc" style="white-space:nowrap;">구조설계·감리부터 안전점검, 구조검토까지 구조 안전의 전 과정을 책임집니다.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card fade-up">
+        <div class="service-card-top">
+          <div class="service-icon">🏗️</div>
+          <h3>구조설계 &amp; 감리</h3>
+        </div>
+        <div class="service-card-body">
+          <p>건축물의 안전성과 경제성을 모두 만족하는 최적의 구조 시스템 설계와 시공 단계 감리 서비스를 제공합니다.</p>
+          <ul class="service-list">
+            <li>신축 건축물 구조설계</li>
+            <li>리모델링·증축 구조검토</li>
+            <li>구조 안전성 검토 및 인허가 지원</li>
+            <li>건축·토목 공사 구조감리</li>
+            <li>비정형 복잡 구조 해석</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-card-top" style="background:linear-gradient(135deg,#1a5276,#2980b9);">
+          <div class="service-icon">🔍</div>
+          <h3>건축물 안전점검</h3>
+        </div>
+        <div class="service-card-body">
+          <p>건설공사 및 기존 시설물의 구조적 안전 상태를 체계적으로 점검하고 품질 향상 방안을 제시합니다.</p>
+          <ul class="service-list">
+            <li>건설공사에 대한 각종 안전점검</li>
+            <li>건설공사의 품질 향상 대책</li>
+            <li>시설물 피해사례 수집·분석</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-card-top" style="background:linear-gradient(135deg,#154360,#1a6aa1);">
+          <div class="service-icon">📋</div>
+          <h3>구조검토</h3>
+        </div>
+        <div class="service-card-body">
+          <p>시공 단계 전반에 걸쳐 구조적 안전성을 검토하고, 오시공·설비·가설 구조물 등 다양한 구조 문제에 신속하게 대응합니다.</p>
+          <ul class="service-list">
+            <li>가설구조 검토</li>
+            <li>시공단계 구조검토</li>
+            <li>설비·장비 구조검토</li>
+            <li>비구조요소 내진설계</li>
+            <li>골조 오시공 대안 및 보강 검토</li>
+            <li>기초·지하구조 검토</li>
+            <li>안전관리계획서 가설구조 검토</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TECHNOLOGY ===== -->
+<section id="technology" class="section">
+  <div class="container">
+    <div class="fade-up">
+      <p class="section-label">기술 / 공법</p>
+      <h2 class="section-title">차별화된 기술력으로<br>새로운 가치를 창출합니다</h2>
+      <p class="section-desc">엘에스구조엔지니어링㈜만의 특화된 기술과 공법으로 더 안전하고 효율적인 건축 환경을 실현합니다.</p>
+    </div>
+    <div class="tech-grid">
+      <!-- Z-Pile -->
+      <div class="tech-card fade-up">
+        <div class="tech-card-header">
+          <div class="tech-badge">Foundation Technology</div>
+          <h3>Z-Pile 공법</h3>
+          <p>
+            Z형 단면 강관 말뚝을 활용한 혁신적 기초 공법으로, 기존 PHC파일 및 강관 말뚝 대비
+            우수한 지지력과 경제성을 제공합니다. 도심지 협소 부지 및 복잡한 지반 조건에서도
+            효과적으로 적용 가능한 차세대 말뚝 기초 솔루션입니다.
+          </p>
+        </div>
+        <div class="tech-card-body">
+          <div class="tech-features">
+            <div class="tech-feat">
+              <div class="tech-feat-icon">⚡</div>
+              <div class="tech-feat-text">
+                <h5>향상된 지지력</h5>
+                <p>Z형 단면의 구조적 특성으로 기존 말뚝 대비 수평·수직 하중 저항 성능 극대화</p>
+              </div>
+            </div>
+            <div class="tech-feat">
+              <div class="tech-feat-icon">💰</div>
+              <div class="tech-feat-text">
+                <h5>경제성 우수</h5>
+                <p>재료량 최적화 및 시공 효율 향상으로 공사비 절감 효과</p>
+              </div>
+            </div>
+            <div class="tech-feat">
+              <div class="tech-feat-icon">🌍</div>
+              <div class="tech-feat-text">
+                <h5>다양한 지반 적용</h5>
+                <p>연약지반, 암반, 도심지 협소 부지 등 복잡한 지반 조건에서도 적용 가능</p>
+              </div>
+            </div>
+            <div class="tech-feat">
+              <div class="tech-feat-icon">🔧</div>
+              <div class="tech-feat-text">
+                <h5>시공성 향상</h5>
+                <p>간편한 시공 절차와 품질관리 용이성으로 공기 단축</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 철근샵드로잉 -->
+      <div class="tech-card fade-up">
+        <div class="tech-card-header">
+          <div class="tech-badge">Consulting Service</div>
+          <h3>철근샵드로잉 컨설팅</h3>
+          <p>
+            구조 도면을 바탕으로 현장 시공에 최적화된 철근 배근 상세 도면을 제작하는
+            전문 컨설팅 서비스입니다. 시공 오류 방지와 공기 단축, 재료비 절감을 동시에
+            실현하여 프로젝트의 전반적인 품질과 경제성을 높입니다.
+            리바솔루션(Rebar Solution)과의 기술협력을 통해 3D 철근 솔루션 서비스를 제공합니다.
+          </p>
+        </div>
+        <div class="tech-card-body">
+          <div class="tech-features">
+            <div class="tech-feat">
+              <div class="tech-feat-icon">📐</div>
+              <div class="tech-feat-text">
+                <h5>정밀 배근 상세도</h5>
+                <p>구조설계 의도를 100% 반영한 현장 시공용 철근 배근 상세 도면 작성</p>
+              </div>
+            </div>
+            <div class="tech-feat">
+              <div class="tech-feat-icon">🔄</div>
+              <div class="tech-feat-text">
+                <h5>설계-시공 연계</h5>
+                <p>구조설계팀과 긴밀한 협업으로 설계 오류 및 시공 오류를 사전에 차단</p>
+              </div>
+            </div>
+            <div class="tech-feat">
+              <div class="tech-feat-icon">📦</div>
+              <div class="tech-feat-text">
+                <h5>물량 최적화</h5>
+                <p>정확한 철근 물량 산출로 재료 낭비 최소화 및 자재비 절감</p>
+              </div>
+            </div>
+            <div class="tech-feat">
+              <div class="tech-feat-icon">✅</div>
+              <div class="tech-feat-text">
+                <h5>품질 향상</h5>
+                <p>현장 작업자가 쉽게 이해할 수 있는 명확한 도면으로 시공 품질 향상</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MFRC 공법 -->
+      <div class="tech-card fade-up" style="grid-column: 1 / -1;">
+        <div class="tech-card-header">
+          <div class="tech-badge">Construction Technology</div>
+          <h3>MFRC 공법 <span style="font-size:.85rem; font-weight:600; color:var(--gray);">(Macro Fiber Reinforced Concrete)</span></h3>
+          <p>
+            Macro Fiber를 콘크리트에 혼입하여 철근망 없이도 균열 제어와 구조 성능을 확보하는 바닥 슬라브 공법입니다.
+            MFRC 전문 시공사 서문건설(주)와의 기술협약을 바탕으로 SOG, Topping Slab, Metal Deck 등
+            다양한 바닥 구조에 구조설계부터 시공까지 One-Stop 서비스를 제공합니다.
+          </p>
+        </div>
+        <div class="tech-card-body">
+          <div class="tech-features tech-features--4col">
+            <div class="tech-feat">
+              <div class="tech-feat-icon">🔩</div>
+              <div class="tech-feat-text">
+                <h5>균열 제어 성능</h5>
+                <p>Macro Fiber의 3차원 분산 배치로 콘크리트 균열 발생 억제 및 인성 향상</p>
+              </div>
+            </div>
+            <div class="tech-feat">
+              <div class="tech-feat-icon">📐</div>
+              <div class="tech-feat-text">
+                <h5>구조설계 최적화</h5>
+                <p>SOG 슬라브 구조계산 및 Topping 두께 설계로 하중 조건에 최적화된 단면 제공</p>
+              </div>
+            </div>
+            <div class="tech-feat">
+              <div class="tech-feat-icon">🏗️</div>
+              <div class="tech-feat-text">
+                <h5>시공성 향상</h5>
+                <p>용접철망(WWF) 생략으로 공기 단축, Laser Screed 적용으로 고정밀 평탄도 확보</p>
+              </div>
+            </div>
+            <div class="tech-feat">
+              <div class="tech-feat-icon">🤝</div>
+              <div class="tech-feat-text">
+                <h5>설계-시공 협력 체계</h5>
+                <p>서문건설(주)와의 기술협약으로 구조설계~시공까지 긴밀한 협업 체계 구축, 오류 최소화 및 품질 보증</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PERFORMANCE ===== -->
+<section id="performance" class="section section--gray">
+  <div class="container">
+    <div class="fade-up" id="perf-header">
+      <p class="section-label">수행실적</p>
+      <h2 class="section-title">다양한 프로젝트 경험</h2>
+      <p class="section-desc" style="white-space:nowrap;">주거시설부터 복합건축, 구조검토, 감리까지 폭넓은 분야에서 전문적인 구조 서비스를 제공합니다.</p>
+    </div>
+
+    <!-- 필터 탭 -->
+    <div class="perf-tabs">
+      <button class="tab-btn active" data-filter="all">전체</button>
+      <button class="tab-btn" data-filter="residential">주거시설</button>
+      <button class="tab-btn" data-filter="general">일반건축</button>
+      <button class="tab-btn" data-filter="review">구조검토</button>
+      <button class="tab-btn" data-filter="supervision">구조감리</button>
+    </div>
+
+    <!-- 목록으로 버튼 (상세 뷰에서만 표시) -->
+    <button class="proj-back" id="proj-back-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      목록으로
+    </button>
+
+    <!-- 목록 뷰 -->
+    <div class="proj-list-view" id="proj-list-view">
+      <div class="proj-grid" id="proj-grid"></div>
+      <!-- 구조검토 리스트 (review 탭에서만 표시) -->
+      <div id="review-section" style="display:none;">
+        <div class="review-year-header"><h4>2025년 구조검토 실적</h4></div>
+        <ul class="review-list" id="review-list"></ul>
+      </div>
+    </div>
+
+    <!-- 상세 뷰 -->
+    <div class="proj-detail" id="proj-detail">
+      <div class="proj-detail-inner">
+        <!-- 이미지 슬라이더 -->
+        <div class="slider-wrap">
+          <div class="slider-track" id="slider-track"></div>
+          <button class="slider-arrow prev hidden" id="slider-prev" aria-label="이전">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button class="slider-arrow next hidden" id="slider-next" aria-label="다음">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <div class="slider-indicator hidden" id="slider-indicator">01 / 01</div>
+        </div>
+        <!-- 프로젝트 정보 -->
+        <div>
+          <div class="proj-info-header">
+            <h3 id="detail-name"></h3>
+          </div>
+          <table class="proj-info-table">
+            <tbody>
+              <tr><th>위치</th><td id="detail-loc"></td></tr>
+              <tr><th>건물용도</th><td id="detail-usage"></td></tr>
+              <tr><th>건물규모</th><td id="detail-scale"></td></tr>
+              <tr><th>연면적</th><td id="detail-area"></td></tr>
+              <tr><th>구조형식</th><td id="detail-struct"></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact" class="section">
+  <div class="container">
+    <div class="fade-up">
+      <p class="section-label">연락처</p>
+      <h2 class="section-title">함께 시작하겠습니다</h2>
+      <p class="section-desc">구조 안전에 관한 모든 문의를 환영합니다. 전문가가 직접 상담해 드립니다.</p>
+    </div>
+    <div class="contact-grid" style="margin-top:56px;">
+      <div class="contact-info fade-up">
+        <h3>엘에스구조엔지니어링㈜</h3>
+        <p class="sub">LS Structure Engineering Co., Ltd.</p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div class="contact-text">
+              <h5>주소</h5>
+              <p>서울특별시 강서구 양천로 532<br>가양역 더리브 아너비즈타워 1006호</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div class="contact-text">
+              <h5>전화</h5>
+              <p><a href="tel:0269526300">02-6952-6300</a></p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🏛️</div>
+            <div class="contact-text">
+              <h5>등록</h5>
+              <p>기술사사무소개설등록<br>제 2025-2213호</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">👤</div>
+            <div class="contact-text">
+              <h5>대표이사</h5>
+              <p>이용직 · 양준오</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🕒</div>
+            <div class="contact-text">
+              <h5>업무시간</h5>
+              <p>평일 09:00 – 18:00<br><span style="font-size:.82rem;color:#888;">주말·공휴일 휴무</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-map-wrap fade-up">
+        <iframe
+          src="https://maps.google.com/maps?q=서울특별시+강서구+양천로+532&output=embed"
+          width="100%" height="400"
+          style="border:0; border-radius:12px; display:block;"
+          allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="엘에스구조엔지니어링 위치">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT MODAL ===== -->
+<!-- 수신 이메일: lseng2023@naver.com | Formspree ID: xojkeaqq -->
+<div class="modal-overlay" id="contact-modal" aria-modal="true" role="dialog">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>문의하기</h3>
+      <button class="modal-close" id="modal-close-btn" aria-label="닫기">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form class="contact-form" id="contact-form" action="https://formspree.io/f/xojkeaqq" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cf-name">이름 <span class="form-req">*</span></label>
+            <input type="text" id="cf-name" name="name" placeholder="성함을 입력해주세요" required>
+          </div>
+          <div class="form-group">
+            <label for="cf-contact">연락처 <span class="form-req">*</span></label>
+            <input type="text" id="cf-contact" name="contact" placeholder="전화번호 또는 이메일" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cf-type">문의 유형 <span class="form-req">*</span></label>
+          <select id="cf-type" name="type" required>
+            <option value="" disabled selected>선택해주세요</option>
+            <option value="구조설계">구조설계</option>
+            <option value="구조감리">구조감리</option>
+            <option value="안전점검">안전점검</option>
+            <option value="구조검토">구조검토</option>
+            <option value="기타">기타</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="cf-message">문의 내용 <span class="form-req">*</span></label>
+          <textarea id="cf-message" name="message" rows="5" placeholder="문의하실 내용을 입력해주세요" required></textarea>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="cf-privacy" name="privacy" required>
+          <label for="cf-privacy">개인정보 수집·이용에 동의합니다. <span class="form-req">*</span></label>
+        </div>
+        <button type="submit" class="btn btn-primary form-submit">문의 보내기</button>
+      </form>
+      <div class="form-success" id="form-success">
+        <div class="form-success-icon">✅</div>
+        <h4>문의가 접수되었습니다</h4>
+        <p>빠른 시일 내에 연락드리겠습니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo-kr">엘에스구조엔지니어링㈜</div>
+        <div class="logo-en">LS Structure Engineering Co., Ltd.</div>
+        <p>구조공학 전문 기술사사무소로서 건축물의 안전과 생명을 최우선으로 생각하며, 한계를 넘는 기술력으로 보다 안전한 건축 환경을 만들어 갑니다.</p>
+      </div>
+      <div class="footer-links">
+        <h6>Quick Links</h6>
+        <ul>
+          <li><a href="#company">회사소개</a></li>
+          <li><a href="#services">서비스</a></li>
+          <li><a href="#technology">기술/공법</a></li>
+          <li><a href="#performance">수행실적</a></li>
+          <li><a href="#contact">연락처</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h6>Services</h6>
+        <ul>
+          <li><a href="#services">구조설계 &amp; 감리</a></li>
+          <li><a href="#services">건축물 안전점검</a></li>
+          <li><a href="#services">구조검토</a></li>
+          <li><a href="#technology">Z-Pile 공법</a></li>
+          <li><a href="#technology">철근샵드로잉 컨설팅</a></li>
+          <li><a href="#technology">MFRC 공법</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h6>Contact</h6>
+        <ul>
+          <li>서울 강서구 양천로 532</li>
+          <li>가양역 더리브 아너비즈타워 1006호</li>
+          <li><a href="tel:0269526300">02-6952-6300</a></li>
+          <li>평일 09:00 – 18:00</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 엘에스구조엔지니어링㈜. All rights reserved.</p>
+      <p>기술사사무소개설등록 제 2025-2213호</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to Top -->
+<button id="back-top" aria-label="맨 위로">↑</button>
+
+<script>
+  // ===== HAMBURGER MENU =====
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // ===== ACTIVE NAV LINK =====
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  function setActiveNav() {
+    const scrollY = window.scrollY + 120;
+    sections.forEach(section => {
+      const top = section.offsetTop;
+      const height = section.offsetHeight;
+      if (scrollY >= top && scrollY < top + height) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + section.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }
+
+  // ===== SCROLL ANIMATIONS =====
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  fadeEls.forEach(el => observer.observe(el));
+
+  // ===== BACK TO TOP =====
+  const backTop = document.getElementById('back-top');
+
+  function handleScroll() {
+    setActiveNav();
+    backTop.classList.toggle('visible', window.scrollY > 400);
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+
+  backTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // ===== PERFORMANCE =====
+  const PROJECTS = [
+    // 주거시설
+    { id: 1,  cat: ['residential'], name: '평택 영신 2BL 공동주택',    loc: '경기도 평택시',         usage: '공동주택',             scale: 'B2~27F',      area: '193,272㎡',    struct: '철근콘크리트', ongoing: false, imgs: ['images/projects/p01_1.jpg'] },
+    { id: 2,  cat: ['residential', 'supervision'], name: '세종시 서창리 기숙사', loc: '세종시 조치원읍',  usage: '임대형기숙사',          scale: 'B1~7F',       area: '1,935㎡',      struct: '철근콘크리트', ongoing: false, imgs: ['images/projects/p02_1.jpg'] },
+    { id: 3,  cat: ['residential'], name: '전주 효자동 공동주택',        loc: '전주시 완산구',          usage: '공동주택',             scale: 'B3~29F',      area: '54,777㎡',     struct: '철근콘크리트', ongoing: false, imgs: ['images/projects/p03_1.jpg'] },
+    { id: 4,  cat: ['residential'], name: '방배동 공동주택',             loc: '서울시 서초구',          usage: '공동주택',             scale: 'B2~12F',      area: '15,430㎡',     struct: '철근콘크리트', ongoing: false, imgs: ['images/projects/p04_1.jpg'] },
+    { id: 5,  cat: ['residential'], name: '인천 주안동 미도아파트',      loc: '인천시 미추홀구',        usage: '공동주택',             scale: 'B2~26F',      area: '27,475㎡',     struct: '철근콘크리트', ongoing: false, imgs: ['images/projects/p05_1.jpg'] },
+    { id: 6,  cat: ['residential'], name: '인천 주안동 금강아파트',      loc: '인천시 미추홀구',        usage: '공동주택',             scale: 'B2~20F',      area: '28,180㎡',     struct: '철근콘크리트', ongoing: false, imgs: ['images/projects/p06_1.jpg'] },
+    { id: 7,  cat: ['residential', 'supervision'], name: '세종시 신안리 기숙사', loc: '세종시 조치원읍',  usage: '임대형기숙사',          scale: 'B1~7F',       area: '1,891㎡',      struct: '철근콘크리트', ongoing: false, imgs: ['images/projects/p07_1.jpg'] },
+    { id: 8,  cat: ['residential'], name: '아산시 온천동 주상복합',      loc: '충청남도 아산시',        usage: '공동주택',             scale: 'B7~49F',      area: '127,058㎡',    struct: '철근콘크리트', ongoing: false, imgs: ['images/projects/p08_1.jpg'] },
+    { id: 9,  cat: ['residential'], name: '광주 송정2지구 공동주택',     loc: '경기도 광주시 송정동',   usage: '공동주택',             scale: 'B6~29F',      area: '132,730㎡',    struct: '철근콘크리트', ongoing: false, imgs: ['images/projects/p09_1.jpg'] },
+    { id: 10, cat: ['residential'], name: '인천 검단지구 OOBL-A',        loc: '인천시 서구',            usage: '공동주택',             scale: 'B2~25F',      area: '약 140,000㎡', struct: '철근콘크리트', ongoing: true,  imgs: ['images/projects/p10_1.jpg'] },
+    { id: 11, cat: ['residential'], name: '인천 검단지구 OOBL-B',        loc: '인천시 서구',            usage: '공동주택',             scale: 'B2~20F',      area: '약 110,000㎡', struct: '철근콘크리트', ongoing: true,  imgs: ['images/projects/p11_1.jpg'] },
+    { id: 12, cat: ['residential'], name: '경기도 시흥시 OO 주상복합',   loc: '경기도 시흥시',          usage: '공동주택',             scale: 'B2~39F',      area: '약 300,000㎡', struct: '철근콘크리트', ongoing: true,  imgs: ['images/projects/p12_1.jpg'] },
+    // 일반건축
+    { id: 13, cat: ['general'], name: '세란병원 증축공사',               loc: '서울시 종로구',          usage: '의료시설',             scale: 'B3~6F',       area: '2,576㎡',      struct: '철근콘크리트', ongoing: false, imgs: ['images/projects/p13_1.jpg'] },
+    { id: 14, cat: ['supervision'], name: '성남시 양지동 공동주택',          loc: '경기도 성남시',          usage: '공동주택',             scale: 'B2~16F',      area: '3,377㎡',      struct: '철근콘크리트', ongoing: false, imgs: ['images/projects/p14_1.jpg'] },
+    { id: 15, cat: ['general'], name: '소가야 스마트팜',                 loc: '경남 고성군',            usage: '동물 및 식물관련시설', scale: '1~3F (29동)', area: '53,488㎡',     struct: '철근콘크리트', ongoing: false, imgs: ['images/projects/p15_1.jpg'] },
+  ];
+
+  const REVIEW_ITEMS = [
+    '도로표지판 구조검토',
+    '데크보 시공단계 지지철물 구조검토',
+    '안전관리계획서 가설구조 검토 (급식소)',
+    '가스안전공사 쿨링타워 증설 구조검토',
+    '주차타워 턴테이블 구조검토',
+    '비구조요소 내진설계: 중량칸막이벽 (의정부 OO 공동주택)',
+    '기숙사 동바리 구조검토',
+    '데크보 하부 가설철물 구조검토',
+    '거푸집 가설구조 검토 (시스템 동바리 변경)',
+    '골조 오시공에 따른 대안 검토 (인천시 A 공동주택)',
+    '주차장 지붕층 중차량 운영에 따른 보강 검토 (인천시 B 공동주택)',
+    '외부 비계 및 오픈발코니 구조 검토 (인천시 C 공동주택)',
+    '가설방음벽 구조 설계 적정성 검토 (경북 OO 공동주택)',
+    '안전관리계획서 가설구조 검토 (성남시 OO 공동주택)',
+    '안전관리계획서 가설구조 검토 (강원도 OO 공장)',
+    '주차장 기둥 철근 이음 대안 상세 검토 (남양주 OO 공동주택)',
+  ];
+
+  // 구조검토 리스트 초기 렌더링
+  const reviewListEl = document.getElementById('review-list');
+  REVIEW_ITEMS.forEach(item => {
+    const li = document.createElement('li');
+    li.className = 'review-item';
+    li.textContent = item;
+    reviewListEl.appendChild(li);
+  });
+
+  // --- 그리드 렌더링 ---
+  const projGrid = document.getElementById('proj-grid');
+  const reviewSection = document.getElementById('review-section');
+
+  function renderGrid(filter) {
+    projGrid.innerHTML = '';
+    const isReview = filter === 'review';
+    projGrid.style.display = isReview ? 'none' : '';
+    reviewSection.style.display = isReview ? 'block' : 'none';
+    if (isReview) return;
+
+    const list = filter === 'all'
+      ? PROJECTS
+      : PROJECTS.filter(p => p.cat.includes(filter));
+
+    list.forEach(proj => {
+      const card = document.createElement('div');
+      card.className = 'proj-card';
+      card.dataset.id = proj.id;
+
+      card.innerHTML = `
+        <img class="proj-card__img" src="${proj.imgs[0]}" alt="${proj.name}"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="proj-card__placeholder" style="display:none;"><span>${proj.name}</span></div>
+        <div class="proj-card__overlay">
+          <div class="proj-card__name">${proj.name}</div>
+          <div class="proj-card__more">MORE</div>
+        </div>
+      `;
+      card.addEventListener('click', () => openDetail(proj.id));
+      projGrid.appendChild(card);
+    });
+  }
+
+  // --- 상세 뷰 ---
+  const projListView = document.getElementById('proj-list-view');
+  const projDetailEl = document.getElementById('proj-detail');
+  const perfHeader = document.getElementById('perf-header');
+  const projBackBtn = document.getElementById('proj-back-btn');
+  const sliderTrack = document.getElementById('slider-track');
+  const sliderPrev = document.getElementById('slider-prev');
+  const sliderNext = document.getElementById('slider-next');
+  const sliderIndicator = document.getElementById('slider-indicator');
+  let currentSlide = 0;
+  let totalSlides = 0;
+
+  function pad2(n) { return String(n).padStart(2, '0'); }
+
+  function updateSlider() {
+    sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+    sliderIndicator.textContent = `${pad2(currentSlide + 1)} / ${pad2(totalSlides)}`;
+  }
+
+  function openDetail(id) {
+    const proj = PROJECTS.find(p => p.id === id);
+    if (!proj) return;
+
+    document.getElementById('detail-name').textContent = proj.name;
+    document.getElementById('detail-loc').textContent = proj.loc;
+    document.getElementById('detail-usage').textContent = proj.usage;
+    document.getElementById('detail-scale').textContent = proj.scale;
+    document.getElementById('detail-area').textContent = proj.area;
+    document.getElementById('detail-struct').textContent = proj.struct;
+
+    sliderTrack.innerHTML = '';
+    proj.imgs.forEach(src => {
+      const slide = document.createElement('div');
+      slide.className = 'slide';
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = proj.name;
+      img.onerror = function() {
+        const ph = document.createElement('div');
+        ph.className = 'slide-placeholder';
+        ph.innerHTML = `<span>${proj.name}</span>`;
+        slide.replaceChild(ph, this);
+      };
+      slide.appendChild(img);
+      sliderTrack.appendChild(slide);
+    });
+
+    totalSlides = proj.imgs.length;
+    currentSlide = 0;
+    updateSlider();
+
+    const single = totalSlides <= 1;
+    sliderPrev.classList.toggle('hidden', single);
+    sliderNext.classList.toggle('hidden', single);
+    sliderIndicator.classList.toggle('hidden', single);
+
+    perfHeader.classList.add('hidden');
+    projBackBtn.classList.add('visible');
+    projListView.classList.add('hidden');
+    projDetailEl.classList.add('active');
+    document.getElementById('performance').classList.add('detail-active');
+
+    const perfSection = document.getElementById('performance');
+    window.scrollTo({ top: perfSection.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+  }
+
+  sliderPrev.addEventListener('click', () => {
+    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+    updateSlider();
+  });
+  sliderNext.addEventListener('click', () => {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    updateSlider();
+  });
+
+  projBackBtn.addEventListener('click', () => {
+    projDetailEl.classList.remove('active');
+    projListView.classList.remove('hidden');
+    projBackBtn.classList.remove('visible');
+    perfHeader.classList.remove('hidden');
+    document.getElementById('performance').classList.remove('detail-active');
+  });
+
+  // --- 필터 탭 ---
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  let currentFilter = 'all';
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
+      if (projDetailEl.classList.contains('active')) {
+        projDetailEl.classList.remove('active');
+        projListView.classList.remove('hidden');
+        projBackBtn.classList.remove('visible');
+        perfHeader.classList.remove('hidden');
+        document.getElementById('performance').classList.remove('detail-active');
+      }
+      renderGrid(currentFilter);
+    });
+  });
+
+  // 초기 렌더링
+  renderGrid('all');
+
+  // ===== CONTACT MODAL =====
+  const modalOverlay = document.getElementById('contact-modal');
+  const openModalBtn = document.getElementById('open-modal-btn');
+  const closeModalBtn = document.getElementById('modal-close-btn');
+  const contactForm = document.getElementById('contact-form');
+  const formSuccess = document.getElementById('form-success');
+
+  function openModal() {
+    modalOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    modalOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  openModalBtn.addEventListener('click', openModal);
+  closeModalBtn.addEventListener('click', closeModal);
+  modalOverlay.addEventListener('click', function(e) {
+    if (e.target === modalOverlay) closeModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = contactForm.querySelector('.form-submit');
+    btn.textContent = '전송 중...';
+    btn.disabled = true;
+    try {
+      const res = await fetch(contactForm.action, {
+        method: 'POST',
+        body: new FormData(contactForm),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        contactForm.style.display = 'none';
+        formSuccess.style.display = 'block';
+        setTimeout(() => {
+          closeModal();
+          setTimeout(() => {
+            contactForm.style.display = '';
+            formSuccess.style.display = 'none';
+            contactForm.reset();
+            btn.textContent = '문의 보내기';
+            btn.disabled = false;
+          }, 400);
+        }, 2000);
+      } else {
+        alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        btn.textContent = '문의 보내기';
+        btn.disabled = false;
+      }
+    } catch {
+      alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      btn.textContent = '문의 보내기';
+      btn.disabled = false;
+    }
+  });
+
+  // ===== SMOOTH SCROLL OFFSET =====
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        const offset = 80;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
